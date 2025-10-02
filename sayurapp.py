@@ -37,56 +37,58 @@ def predict_species(img):
 
 # ========================== STREAMLIT UI ==========================
 
-# Sidebar
-st.sidebar.title("📌 Navigasi")
-page = st.sidebar.radio("Pilih Halaman:", ["🏠 Beranda", "📂 Upload/URL", "ℹ️ Tentang"])
+# Judul
+st.title("Vegetable Classification App 🥦🍅🥕")
+st.subheader("Klasifikasi Sayuran Dengan Menggunakan MobileNet")
+st.caption("Kelompok 2 Pagi A Khasanah-Rindiani-Salsabilla")
 
-if page == "🏠 Beranda":
-    st.title("Vegetable Classification App 🥦🍅🥕")
-    st.subheader("Klasifikasi Sayuran Dengan Menggunakan MobileNet")
-    st.caption("Kelompok 2 Pagi A Khasanah-Rindiani-Salsabilla")
+st.markdown("---")
 
-    st.info("Di bawah ini adalah contoh gambar sayuran yang berhasil diprediksi dengan benar oleh sistem:")
+# Bagian gambar contoh
+st.info("Di bawah ini adalah contoh gambar sayuran yang berhasil diprediksi dengan benar oleh sistem:")
+image_path = "assets/output.png"
+st.image(image_path, caption="Contoh Sayuran", use_container_width=True)
 
-    image_path = "assets/output.png"
-    st.image(image_path, caption="Contoh Sayuran", use_container_width=True)
+st.markdown("---")
 
-elif page == "📂 Upload/URL":
-    st.title("📂 Form Input Data Gambar")
-    input_options = st.tabs(["Upload Gambar", "URL Gambar"])
+# Bagian input gambar
+st.header("📂 Form Input Data Gambar")
+input_options = st.selectbox("Pilih Metode Input:", ["Upload Gambar", "URL Gambar"])
 
-    with input_options[0]:
-        uploaded_file = st.file_uploader("Upload gambar sayuran (.jpg/.jpeg)", type=["jpg", "jpeg", "png"])
-        if uploaded_file:
-            st.image(uploaded_file, caption="✅ Gambar berhasil diupload", use_container_width=True)
-            if st.button("🔍 Prediksi dari Upload"):
-                img = Image.open(uploaded_file)
+if input_options == "Upload Gambar":
+    uploaded_file = st.file_uploader("Upload gambar sayuran (.jpg/.jpeg/.png)", type=["jpg", "jpeg", "png"])
+    if uploaded_file:
+        st.image(uploaded_file, caption="✅ Gambar berhasil diupload", use_container_width=True)
+        if st.button("🔍 Prediksi dari Upload"):
+            img = Image.open(uploaded_file)
+            result = predict_species(img)
+            st.success(result)
+
+elif input_options == "URL Gambar":
+    url = st.text_input("Masukkan URL gambar sayuran:")
+    if url:
+        try:
+            response = requests.get(url, stream=True)
+            img = Image.open(BytesIO(response.content))
+            st.image(img, caption="✅ Gambar berhasil diambil", use_container_width=True)
+            if st.button("🔍 Prediksi dari URL"):
                 result = predict_species(img)
                 st.success(result)
+        except:
+            st.error("❌ URL tidak valid atau tidak bisa diakses.")
 
-    with input_options[1]:
-        url = st.text_input("Masukkan URL gambar sayuran:")
-        if url:
-            try:
-                response = requests.get(url, stream=True)
-                img = Image.open(BytesIO(response.content))
-                st.image(img, caption="✅ Gambar berhasil diambil", use_container_width=True)
-                if st.button("🔍 Prediksi dari URL"):
-                    result = predict_species(img)
-                    st.success(result)
-            except:
-                st.error("❌ URL tidak valid atau tidak bisa diakses.")
+st.markdown("---")
 
-elif page == "ℹ️ Tentang":
-    st.title("ℹ️ Tentang Aplikasi")
-    st.write("""
-    Aplikasi ini dibuat untuk melakukan **klasifikasi jenis sayuran** 
-    menggunakan metode **MobileNet**.
+# Bagian tentang
+st.header("ℹ️ Tentang Aplikasi")
+st.write("""
+Aplikasi ini dibuat untuk melakukan **klasifikasi jenis sayuran** 
+menggunakan metode **MobileNet**.
 
-    **Fitur utama**:
-    - Upload gambar sayuran dari device
-    - Input URL gambar
-    - Menampilkan hasil prediksi jenis sayuran
+**Fitur utama**:
+- Upload gambar sayuran dari device
+- Input URL gambar
+- Menampilkan hasil prediksi jenis sayuran
 
-    **Dikembangkan oleh**: Kelompok 4 Pagi A
-    """)
+**Dikembangkan oleh**: Kelompok 2 Pagi A Khasanah-Rindiani-Salsabilla
+""")
