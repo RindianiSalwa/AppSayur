@@ -8,7 +8,7 @@ import numpy as np
 from io import BytesIO
 
 # Load the pre-trained model
-model = load_model('final_model.h5')
+model = load_model('models/final_model.h5')
 
 # Fungsi untuk melakukan prediksi
 def predict_species(img):
@@ -125,4 +125,5 @@ elif selected_input_option == 'URL Gambar':
             st.error(f"Error: {e}")
 else:
     st.warning('Silakan Pilih Salah Satu Jenis Inputan Gambar.')
+
 
