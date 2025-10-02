@@ -13,7 +13,7 @@ model = load_model('final_model.h5')
 # Fungsi untuk melakukan prediksi
 def predict_species(img):
     # Praproses gambar
-    img = img.resize((224, 224))  # Mengubah ukuran gambar
+    img = img.resize((224, 224))  
     img_array = image.img_to_array(img)
     img_array = np.expand_dims(img_array, axis=0)
     img_array /= 255.0
@@ -125,3 +125,4 @@ elif selected_input_option == 'URL Gambar':
             st.error(f"Error: {e}")
 else:
     st.warning('Silakan Pilih Salah Satu Jenis Inputan Gambar.')
+
