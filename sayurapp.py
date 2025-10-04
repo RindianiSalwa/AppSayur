@@ -60,7 +60,7 @@ def predict_species(img):
 # ========================== STREAMLIT UI ==========================
 
 # Judul
-st.title("Vegetable Classification App 🥦🍅🥕")
+st.title("Vegetable Classification App 🥦🍅")
 st.subheader("Klasifikasi Sayuran Dengan Menggunakan MobileNet")
 st.caption("Kelompok 2 Pagi A Khasanah-Rindiani-Salsabilla")
 
@@ -98,3 +98,4 @@ menggunakan metode **MobileNet**.
 
 **Dikembangkan oleh**: Kelompok 2 Pagi A Khasanah-Rindiani-Salsabilla
 """)
+
