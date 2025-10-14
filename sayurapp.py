@@ -8,25 +8,6 @@ import numpy as np
 # Load model
 model = load_model('models/final_model.h5')
 
-# Dictionary kandungan gizi
-kandungan = {
-    "Brokoli": "Vitamin C, Vitamin K, Serat, Folat, Antioksidan",
-    "Capsicum": "Vitamin A, Vitamin C, Vitamin B6, Folat, Antioksidan",
-    "Kacang_Polong": "Protein, Serat, Vitamin K, Vitamin B1, Fosfor",
-    "Kembang_Kol": "Vitamin C, Vitamin K, Folat, Serat, Antioksidan",
-    "Kentang": "Karbohidrat, Vitamin C, Vitamin B6, Kalium, Serat",
-    "Kubis": "Vitamin C, Vitamin K, Folat, Mangan, Serat",
-    "Labu_Botol": "Vitamin C, Vitamin B, Magnesium, Kalsium, Serat",
-    "Labu_Kabocha_Hijau": "Vitamin A, Vitamin C, Beta-Karoten, Serat",
-    "Labu_Pahit": "Vitamin C, Vitamin A, Zat Besi, Kalium, Antioksidan",
-    "Lobak": "Vitamin C, Folat, Kalium, Serat",
-    "Pepaya": "Vitamin C, Vitamin A, Folat, Serat, Enzim Papain",
-    "Terong_Hijau": "Serat, Vitamin B1, Vitamin B6, Folat, Mangan",
-    "Timun": "Air, Vitamin K, Vitamin C, Magnesium, Kalium",
-    "Tomat": "Likopen, Vitamin C, Vitamin K, Folat, Kalium",
-    "Wortel": "Vitamin A, Beta-Karoten, Serat, Kalium",
-}
-
 # Fungsi prediksi
 def predict_species(img):
     img = img.resize((224, 224))  
@@ -50,12 +31,7 @@ def predict_species(img):
     if predicted_probability <= 90:
         return "⚠️ Gambar ini tidak termasuk jenis sayuran yang telah di dukung."
     else:
-        kand = kandungan.get(predicted_species, "Informasi kandungan belum tersedia.")
-        return f"""
-        ✅ Termasuk Jenis Sayuran **{predicted_species}**  
-        🔢 Akurasi: {predicted_probability:.2f}%  
-        🥗 Kandungan: {kand}
-        """
+        return f"✅ Termasuk Jenis Sayuran **{predicted_species}** dengan akurasi {predicted_probability:.2f}%."
 
 # ========================== STREAMLIT UI ==========================
 
@@ -94,8 +70,7 @@ menggunakan metode **MobileNet**.
 
 **Fitur utama**:
 - Upload gambar sayuran dari device
-- Menampilkan hasil prediksi jenis sayuran dan kandungan gizinya
+- Menampilkan hasil prediksi jenis sayuran
 
 **Dikembangkan oleh**: Kelompok 2 Pagi A Khasanah-Rindiani-Salsabilla
 """)
-
